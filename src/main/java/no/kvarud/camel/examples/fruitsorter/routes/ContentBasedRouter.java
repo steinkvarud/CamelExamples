@@ -19,8 +19,8 @@ public class ContentBasedRouter extends SpringRouteBuilder {
     public void configure() throws Exception {
 
         from("activemq:queue:fruits").choice().
-                //when(body().isEqualTo(Fruit.BANANA)).to("activemq:queue:banana").
-                //when(body().isEqualTo(Fruit.PEAR)).to("activemq:queue:pears").
+                when(body().isEqualTo(Fruit.BANANA)).to("activemq:queue:banana").
+                when(body().isEqualTo(Fruit.PEAR)).to("activemq:queue:pears").
                 when(body().isEqualTo(Fruit.ORANGE)).bean(OrangeJuicePress.class).otherwise().bean(DefaultHandler.class);
     }
 }
