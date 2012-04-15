@@ -39,10 +39,13 @@ Add the Camel activemq component
 Example index
 -------------
 
-- FruitSorter
+FruitSorter
+^^^^^^^^^^^
+This is an example of a content based message router. It is located in the ``no.kvarud.camel.examples.fruitsorter`` package
 
-  - This is an example of a content based message router. It is located in the ``no.kvarud.camel.examples.fruitsorter`` package
+To run the example ::
 
+   mvn exec:java -Dexec.mainClass="no.kvarud.camel.examples.fruitsorter.FruitSorterRunner"
 
 
 
