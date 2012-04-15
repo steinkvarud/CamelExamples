@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:amq="http://activemq.apache.org/schema/core"
+       xmlns:camel="http://camel.apache.org/schema/spring"
+       xsi:schemaLocation="
+       http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+
+    <camel:camelContext id="camel">
+
+        <camel:contextScan/>
+    </camel:camelContext>
+
+    <!-- Setting up component scan -->
+    <context:component-scan base-package="no.kvarud.camel.examples.fruitsorter"/>
+
+
+    <!-- Setting up the ApacheMQ connection factory -->
+    <amq:connectionFactory id="jmsFactory" brokerURL="vm://localhost" />
+
+    <!--  ActiveMQ Destination  -->
+    <amq:queue id="destination" physicalName="fruits" />
+
+    <!-- JMS Producer Configuration -->
+    <bean id="jmsProducerConnectionFactory"
+          class="org.springframework.jms.connection.SingleConnectionFactory"
+          depends-on="jmsFactory"
+          p:targetConnectionFactory-ref="jmsFactory" />
+
+    <bean id="jmsProducerTemplate" class="org.springframework.jms.core.JmsTemplate"
+          p:connectionFactory-ref="jmsProducerConnectionFactory"
+          p:defaultDestination-ref="destination" />
+
+
+</beans>
+
